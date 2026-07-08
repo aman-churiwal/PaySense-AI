@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PaySense AI - Smart Payslip & Offer Letter Assistant powered by RAG. Upload, understand, and compare your salary documents.">
+    <title>PaySense AI — Smart Payslip & Offer Letter Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">💰</span>
+                <h1>PaySense <span class="ai-badge">AI</span></h1>
+            </div>
+            <p class="tagline">Upload your payslip or offer letter. Ask anything.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: Upload & Documents -->
+            <section class="panel upload-panel" id="upload-panel">
+                <div class="panel-header">
+                    <h2>📄 Documents</h2>
+                    <span class="doc-count" id="doc-count">0 uploaded</span>
+                </div>
+
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-icon">⬆️</div>
+                    <p>Drop your payslip or offer letter here</p>
+                    <p class="upload-hint">PDF, PNG, JPG — max 10MB</p>
+                    <input type="file" id="file-input" accept=".pdf,.png,.jpg,.jpeg" hidden>
+                    <button class="btn btn-primary" id="browse-btn">Browse Files</button>
+                </div>
+
+                <div class="upload-progress hidden" id="upload-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p class="progress-text" id="progress-text">Processing...</p>
+                </div>
+
+                <div class="document-list" id="document-list">
+                    <!-- Documents appear here -->
+                </div>
+
+                <div class="compare-section hidden" id="compare-section">
+                    <h3>📊 Compare Documents</h3>
+                    <select id="compare-doc-a" class="select-doc"></select>
+                    <span class="vs-label">vs</span>
+                    <select id="compare-doc-b" class="select-doc"></select>
+                    <button class="btn btn-secondary" id="compare-btn">Compare</button>
+                </div>
+            </section>
+
+            <!-- Right Panel: Chat -->
+            <section class="panel chat-panel" id="chat-panel">
+                <div class="panel-header">
+                    <h2>💬 Ask PaySense</h2>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message assistant-message">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-content">
+                            <p>Hi! I'm PaySense AI. Upload a payslip or offer letter, then ask me anything about it.</p>
+                            <p class="message-hint">Try: "What is my in-hand salary?", "Explain my HRA", "How much tax am I paying?"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <textarea id="chat-input" placeholder="Ask about your payslip or offer letter..." rows="1"></textarea>
+                    <button class="btn btn-send" id="send-btn" disabled>
+                        <span>➤</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-google-genai
+chromadb
+sentence-transformers
+PyMuPDF
+pytesseract
+python-multipart
+Pillow
+pydantic
+pytest
+httpx
+google-generativeai
