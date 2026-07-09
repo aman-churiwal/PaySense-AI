@@ -1,7 +1,7 @@
 """Extract structured payslip/offer letter fields using Gemini LLM."""
 
 import json
-import google import genai
+from google import genai
 
 EXTRACTION_PROMPT = """You are a payroll document parser. Extract structured fields from the following document text.
 

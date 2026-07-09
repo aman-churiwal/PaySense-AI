@@ -135,14 +135,16 @@ function renderDocuments() {
         card.className = "doc-card";
         card.innerHTML = `
             <div class="doc-card-header">
-                <strong>${fields.employee_name || docId}</strong>
+                <div class="doc-card-title">
+                    <strong>${fields.employee_name || docId}</strong>
+                    ${fields.period ? `<span class="doc-card-period">${fields.period}</span>` : ""}
+                </div>
                 <span class="doc-type-badge">${fields.document_type || "doc"}</span>
             </div>
-            <div class="doc-card-fields">
-                ${fields.period ? `<div class="doc-field"><span>Period</span><span class="doc-field-value">${fields.period}</span></div>` : ""}
-                ${fields.basic_pay != null ? `<div class="doc-field"><span>Basic</span><span class="doc-field-value">₹${Number(fields.basic_pay).toLocaleString("en-IN")}</span></div>` : ""}
-                ${fields.gross_salary != null ? `<div class="doc-field"><span>Gross</span><span class="doc-field-value">₹${Number(fields.gross_salary).toLocaleString("en-IN")}</span></div>` : ""}
-                ${fields.net_pay != null ? `<div class="doc-field"><span>Net Pay</span><span class="doc-field-value">₹${Number(fields.net_pay).toLocaleString("en-IN")}</span></div>` : ""}
+            <div class="doc-card-stats">
+                ${fields.basic_pay != null ? `<div class="doc-stat"><span class="doc-stat-label">Basic</span><span class="doc-stat-value">₹${Number(fields.basic_pay).toLocaleString("en-IN")}</span></div>` : ""}
+                ${fields.gross_salary != null ? `<div class="doc-stat"><span class="doc-stat-label">Gross</span><span class="doc-stat-value">₹${Number(fields.gross_salary).toLocaleString("en-IN")}</span></div>` : ""}
+                ${fields.net_pay != null ? `<div class="doc-stat doc-stat-highlight"><span class="doc-stat-label">Net Pay</span><span class="doc-stat-value">₹${Number(fields.net_pay).toLocaleString("en-IN")}</span></div>` : ""}
             </div>
         `;
         documentList.appendChild(card);
