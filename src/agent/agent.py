@@ -1,7 +1,8 @@
 """PaySense AI agent - orchestrates RAG retrieval, tools and LLM responses."""
 
 import json
-import google.generativeai as genai
+import google import genai
+from google.genai import types
 from src.agent.prompts import SYSTEM_PROMPT, QA_PROMPT_TEMPLATE, COMPARE_PROMPT_TEMPLATE
 from src.agent.tools import search_knowledge, search_documents, compare_docs
 from src.rag.retriever import Retriever
@@ -26,11 +27,8 @@ class PaySenseAgent:
     def _call_llm(self, prompt: str) -> str:
         """Call Gemini LLM with the given prompt."""
 
-        genai.configure(api_key=self._settings.gemini_api_key)
-        model = genai.GenerativeModel(self._settings.gemini_model_name)
-        response = model.generate_content(
-            [{"role": "user", "parts": [{"text": SYSTEM_PROMPT + "\n\n" + prompt}]}]
-        )
+        client = genai.Cliuent(api_key=self._settings.gemini_api_key)
+        response = client.models.generate_content(model=self._settings.gemini_model_name, contents= prompt, config = types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT))
         return response.text
 
 

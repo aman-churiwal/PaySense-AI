@@ -12,4 +12,4 @@ Pillow
 pydantic
 pytest
 httpx
-google-generativeai
+google-genai

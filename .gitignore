@@ -9,3 +9,4 @@ venv/
 chroma_data/
 uploads/
 .pytest_cache/
+.idea/

@@ -4,9 +4,6 @@ import os
 from dataclasses import dataclass, field
 from dotenv import load_dotenv
 
-from src.rag import embeddings
-
-
 @dataclass(frozen=True)
 class Settings:
     """Immutable application settings."""
@@ -23,6 +20,7 @@ class Settings:
     @classmethod
     def from_env(cls) -> "Settings":
         """Create Settings from environment variables."""
+        load_dotenv()
         return cls(
             gemini_api_key=os.getenv("GEMINI_API_KEY", ""),
             chroma_persist_dir=os.getenv("CHROMA_PERSIST_DIR", "./chroma_data"),

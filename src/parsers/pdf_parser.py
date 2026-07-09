@@ -2,7 +2,6 @@
 
 import os
 import fitz  # PyMuPDF
-from google.genai._gaos.resources.interactions.googlemapsresultstep import result
 
 
 def parse_pdf(file_path: str) -> str:

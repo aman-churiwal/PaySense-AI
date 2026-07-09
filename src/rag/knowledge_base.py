@@ -31,7 +31,7 @@ def _chunk_markdown(text: str, chunk_size: int = 500, overlap: int = 50) -> list
                         chunks.append(current_chunk.strip())
                         # Keep overlap
                         overlap_words = current_chunk.strip().split()[-10:]
-                        current_chunk = "".join(overlap_words) + " " + word
+                        current_chunk = " ".join(overlap_words) + " " + word
                     else:
                         current_chunk = (current_chunk + " " + word).strip()
             else:

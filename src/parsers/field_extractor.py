@@ -1,7 +1,7 @@
 """Extract structured payslip/offer letter fields using Gemini LLM."""
 
 import json
-import google.generativeai as genai
+import google import genai
 
 EXTRACTION_PROMPT = """You are a payroll document parser. Extract structured fields from the following document text.
 
@@ -57,9 +57,8 @@ _FALLBACK_FIELDS = {
 
 def _call_gemini(prompt: str, api_key: str, model_name: str) -> str:
     """Call Google Gemini API and return the response text."""
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(model_name)
-    response = model.generate_content(prompt)
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(model=model_name, contents=prompt)
 
     return response.text
 
@@ -70,7 +69,7 @@ def extract_fields(raw_text: str, api_key: str, model_name: str) -> dict:
     Args:
         raw_text: The full text content of the document.
         api_key: Google Gemini API key
-        model_name: Gemini model name (e.g. "gemini-2.0-flash").
+        model_name: Gemini model name (e.g. "gemini-2.5-flash").
 
     Returns:
         ValueError: If raw_text is empty.

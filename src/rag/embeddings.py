@@ -1,5 +1,5 @@
 """Embedding model wrapper using sentence-transformers."""
-from langgraph.store.base import embed
+
 from sentence_transformers import SentenceTransformer
 
 class EmbeddingModel:
