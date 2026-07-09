@@ -30,7 +30,7 @@ const sendBtn = document.getElementById("send-btn");
 
 async function initSession() {
     try {
-        const resp = await fetch(`${API_BASE}/api/session`, { method: "POST" });
+        const resp = await fetch(`${API_BASE}/api/session`, {method: "POST"});
         const data = await resp.json();
         sessionId = data.session_id;
         console.log("Session created:", sessionId);
@@ -96,8 +96,13 @@ async function uploadFile(file) {
         });
 
         if (!resp.ok) {
-            const err = await resp.json();
-            throw new Error(err.detail || "Upload failed");
+            let detail = `Upload failed (HTTP ${resp.status})`;
+            try {
+                const err = await resp.json();
+                detail = err.detail || detail;
+            } catch {
+            }
+            throw new Error(detail);
         }
 
         progressFill.style.width = "100%";
@@ -194,8 +199,8 @@ async function sendMessage() {
     try {
         const resp = await fetch(`${API_BASE}/api/chat`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ session_id: sessionId, message }),
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({session_id: sessionId, message}),
         });
 
         removeTypingIndicator(typingId);
@@ -268,7 +273,7 @@ compareBtn.addEventListener("click", async () => {
     try {
         const resp = await fetch(`${API_BASE}/api/compare`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 session_id: sessionId,
                 doc_id_a: docA,

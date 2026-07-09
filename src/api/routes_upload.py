@@ -85,5 +85,12 @@ async def upload_document(
         )
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to process document: {e}",
+        )
     finally:
         os.unlink(tmp.name)

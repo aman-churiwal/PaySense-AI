@@ -34,12 +34,16 @@ async def compare(request: CompareRequest):
 
     fields_a = docs[request.doc_id_a]["fields"]
     fields_b = docs[request.doc_id_b]["fields"]
-    comparison = compare_documents(fields_a, fields_b)
 
-    # Get LLM explanation via the agent
-    explanation = _agent.chat(
-        request.session_id,
-        f"Compare documents: {json.dumps(comparison, default=str)}. User asked: {request.question}",
-    )
+    try:
+        comparison = compare_documents(fields_a, fields_b)
+
+        # Get LLM explanation via the agent
+        explanation = _agent.chat(
+            request.session_id,
+            f"Compare documents: {json.dumps(comparison, default=str)}. User asked: {request.question}",
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Comparison error: {str(e)}")
 
     return CompareResponse(comparison = comparison, explanation=explanation)
