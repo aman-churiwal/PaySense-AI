@@ -1,3 +1,13 @@
+---
+title: PaySense AI
+emoji: 💰
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # PaySense AI 💰
 
 > Smart Payslip & Offer Letter Assistant powered by RAG

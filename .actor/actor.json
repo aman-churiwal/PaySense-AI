@@ -1,0 +1,9 @@
+{
+    "actorSpecification": 1,
+    "name": "paysense-ai",
+    "title": "PaySense AI",
+    "description": "Smart Payslip & Offer Letter Assistant powered by RAG",
+    "version": "1.0",
+    "usesStandbyMode": true,
+    "dockerfile": "./Dockerfile"
+}
