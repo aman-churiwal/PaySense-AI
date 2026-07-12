@@ -8,7 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <script>
+        // Apify Standby mode requires the auth token on EVERY request,
+        // including static assets - a plain <link> tag can't carry it,
+        // so inject the stylesheet with the token attached instead.
+        (function () {
+            var token = new URLSearchParams(window.location.search).get("token");
+            var suffix = token ? ("?token=" + encodeURIComponent(token)) : "";
+            document.write('<link rel="stylesheet" href="style.css' + suffix + '">');
+        })();
+    </script>
 </head>
 <body>
     <div class="app-container">
@@ -84,6 +93,14 @@
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        (function () {
+            var token = new URLSearchParams(window.location.search).get("token");
+            var suffix = token ? ("?token=" + encodeURIComponent(token)) : "";
+            var s = document.createElement("script");
+            s.src = "app.js" + suffix;
+            document.body.appendChild(s);
+        })();
+    </script>
 </body>
 </html>
