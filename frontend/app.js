@@ -5,6 +5,16 @@
 
 const API_BASE = "";
 
+// Apify Standby mode requires the auth token on EVERY request, not just the
+// initial page load. If this page was opened with ?token=..., carry that
+// token forward onto every /api/* call automatically.
+const _apifyToken = new URLSearchParams(window.location.search).get("token");
+function apiUrl(path) {
+    if (!_apifyToken) return `${API_BASE}${path}`;
+    const separator = path.includes("?") ? "&" : "?";
+    return `${API_BASE}${path}${separator}token=${encodeURIComponent(_apifyToken)}`;
+}
+
 // State
 let sessionId = null;
 const documents = {};
@@ -30,7 +40,7 @@ const sendBtn = document.getElementById("send-btn");
 
 async function initSession() {
     try {
-        const resp = await fetch(`${API_BASE}/api/session`, {method: "POST"});
+        const resp = await fetch(apiUrl("/api/session"), { method: "POST" });
         const data = await resp.json();
         sessionId = data.session_id;
         console.log("Session created:", sessionId);
@@ -90,7 +100,7 @@ async function uploadFile(file) {
         progressFill.style.width = "50%";
         progressText.textContent = "Extracting text & fields...";
 
-        const resp = await fetch(`${API_BASE}/api/upload`, {
+        const resp = await fetch(apiUrl("/api/upload"), {
             method: "POST",
             body: formData,
         });
@@ -101,6 +111,7 @@ async function uploadFile(file) {
                 const err = await resp.json();
                 detail = err.detail || detail;
             } catch {
+                // Response body wasn't valid JSON (e.g. a proxy/server error page) - keep the generic message
             }
             throw new Error(detail);
         }
@@ -197,10 +208,10 @@ async function sendMessage() {
     const typingId = addTypingIndicator();
 
     try {
-        const resp = await fetch(`${API_BASE}/api/chat`, {
+        const resp = await fetch(apiUrl("/api/chat"), {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({session_id: sessionId, message}),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session_id: sessionId, message }),
         });
 
         removeTypingIndicator(typingId);
@@ -271,9 +282,9 @@ compareBtn.addEventListener("click", async () => {
     const typingId = addTypingIndicator();
 
     try {
-        const resp = await fetch(`${API_BASE}/api/compare`, {
+        const resp = await fetch(apiUrl("/api/compare"), {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 session_id: sessionId,
                 doc_id_a: docA,
