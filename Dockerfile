@@ -18,4 +18,4 @@ RUN mkdir -p /app/chroma_data && chmod -R 777 /app/chroma_data
 
 EXPOSE 7860
 
-CMD ["sh", "-c", "uvicorn run:app --host 0.0.0.0 --port ${ACTOR_WEB_SERVER_PORT:-7860}"]
+CMD ["uvicorn", "run:app", "--host", "0.0.0.0", "--port", "10000"]
